@@ -1,0 +1,228 @@
+{
+	"name": "i2max-salesforce-toolkit",
+	"publisher": "iAkhadjon",
+	"displayName": "i2maxOrg Explorer",
+	"description": "Salesforce DX utilities for developers (security-hardened fork)",
+	"license": "GPL-3.0",
+	"author": {
+		"name": "Akhadjon"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/iAkhadjon/i2max-salesforce-toolkit.git"
+	},
+	"icon": "resources/i2maxlogo.png",
+	"galleryBanner": {
+		"color": "#007acc",
+		"theme": "dark"
+	},
+	"version": "1.4.2",
+	"engines": {
+		"vscode": "^1.74.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"workspaceContains:sfdx-project.json"
+	],
+	"main": "./dist/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "sftk.createScratch",
+				"title": "New",
+				"view": "org-explorer",
+				"icon": {
+					"light": "resources/plus.png",
+					"dark": "resources/plus.png"
+				}
+			},
+			{
+				"command": "sftk.refreshExplorer",
+				"title": "Refresh",
+				"view": "org-explorer",
+				"icon": {
+					"light": "resources/refresh.png",
+					"dark": "resources/refresh.png"
+				}
+			},
+			{
+				"command": "sftk.createScratchPalette",
+				"title": "SFTK: Create Scratch-Org"
+			},
+			{
+				"command": "sftk.purgeExpiredScratchOrgs",
+				"title": "SFTK: Purge Expired Scratch-Orgs"
+			},
+			{
+				"command": "sftk.setDevHub",
+				"view": "org-explorer",
+				"title": "Select DevHub",
+				"icon": {
+					"light": "resources/star.png",
+					"dark": "resources/star.png"
+				}
+			},
+			{
+				"command": "sftk.setScratch",
+				"view": "org-explorer",
+				"title": "Select Scratch Org",
+				"icon": {
+					"light": "resources/star.png",
+					"dark": "resources/star.png"
+				}
+			},
+			{
+				"command": "sftk.openOrg",
+				"view": "org-explorer",
+				"title": "Open Org in the default browser",
+				"icon": {
+					"light": "resources/open.png",
+					"dark": "resources/open.png"
+				}
+			},
+			{
+				"command": "sftk.openOrgSetup",
+				"view": "org-explorer",
+				"title": "Open Org Setup in the default browser",
+				"icon": {
+					"light": "resources/gear.png",
+					"dark": "resources/gear.png"
+				}
+			},
+			{
+				"command": "sftk.deleteScratch",
+				"view": "org-explorer",
+				"title": "Delete",
+				"icon": {
+					"light": "resources/delete.png",
+					"dark": "resources/delete.png"
+				}
+			},
+			{
+				"command": "sftk.deleteScratchPalette",
+				"title": "SFTK: Delete Scratch-Org"
+			}
+		],
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "org-explorer",
+					"title": "i2maxOrg Explorer",
+					"icon": "resources/i2maxlogo.png"
+				}
+			]
+		},
+		"views": {
+			"org-explorer": [
+				{
+					"id": "connected-orgs",
+					"name": "Orgs",
+					"when": "sftkEnabled"
+				}
+			]
+		},
+		"menus": {
+			"view/title": [
+				{
+					"command": "sftk.createScratch",
+					"when": "view == connected-orgs",
+					"group": "navigation"
+				},
+				{
+					"command": "sftk.refreshExplorer",
+					"when": "view == connected-orgs",
+					"group": "navigation"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "sftk.setScratch",
+					"when": "viewItem == scratch",
+					"group": "inline"
+				},
+				{
+					"command": "sftk.openOrg",
+					"when": "view == connected-orgs",
+					"group": "inline"
+				},
+				{
+					"command": "sftk.openOrgSetup",
+					"when": "view == connected-orgs",
+					"group": "inline"
+				},
+				{
+					"command": "sftk.deleteScratch",
+					"when": "viewItem == scratch || viewItem == scratch.selected",
+					"group": "inline"
+				},
+				{
+					"command": "sftk.setDevHub",
+					"when": "viewItem == devhub",
+					"group": "inline"
+				}
+			]
+		},
+		"configuration": {
+			"title": "Salesforce Toolkit",
+			"properties": {
+				"sftk.scratchOrgTimeoutOnCreate": {
+					"type": "integer",
+					"default": 5,
+					"description": "Specifies the timeout to use when creating a scratch org, in minutes. Default set to 5."
+				},
+				"sftk.showExpiredScratchOrgs": {
+					"type": "boolean",
+					"default": false,
+					"description": "Show also expired scratch orgs in the explorer"
+				},
+				"sftk.enableSysAdminActions": {
+					"type": "boolean",
+					"default": false,
+					"description": "Enable advanced actions, require System Administrator access to the target orgs (experimental)"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "webpack --mode production",
+		"compile": "webpack --mode none",
+		"watch": "webpack --mode development --watch",
+		"pretest": "tsc -p ./",
+		"test": "mocha out/test/runtest.js -ui tdd",
+		"lint": "eslint src --ext .ts",
+		"package": "vsce package"
+	},
+	"dependencies": {
+		"file-loader": "^6.2.0"
+	},
+	"devDependencies": {
+		"@types/chai": "^4.2.1",
+		"@types/glob": "^7.1.1",
+		"@types/mocha": "^5.2.7",
+		"@types/node": "^18.0.0",
+		"@types/vscode": "^1.74.0",
+		"@typescript-eslint/eslint-plugin": "^6.0.0",
+		"@typescript-eslint/parser": "^6.0.0",
+		"@vscode/vsce": "^2.19.0",
+		"chai": "^4.2.0",
+		"chai-as-promised": "^7.1.1",
+		"chai-subset": "^1.6.0",
+		"decache": "^4.5.1",
+		"dom-parser": "^0.1.6",
+		"eslint": "^8.0.0",
+		"glob": "^7.1.7",
+		"mocha": "10.8.2",
+		"mocha-multi-reporters": "^1.5.1",
+		"nyc": "^15.0.1",
+		"reflect-metadata": "^0.1.1",
+		"renderjson": "^1.4.0",
+		"ts-loader": "^9.4.2",
+		"ts-node": "^8.8.2",
+		"typescript": "^5.0.4",
+		"vscode-test": "^1.6.1",
+		"webpack": "5.94.0",
+		"webpack-cli": "^5.1.1"
+	}
+}

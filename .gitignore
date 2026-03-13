@@ -1,0 +1,10 @@
+*.vsix
+*.swp
+.vscode-test/
+.nyc_output/
+target/
+out/
+dist/
+node_modules/
+coverage/
+.DS_Store

@@ -1,0 +1,42 @@
+<!--
+ Copyright (C) 2020 Davide Rossi
+ 
+ This file is part of vscode-salesforce-toolkit.
+ 
+ vscode-salesforce-toolkit is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ vscode-salesforce-toolkit is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with vscode-salesforce-toolkit.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<tr>
+    <td>Source Snapshot</td>
+    <td>${sourceSnapshot}</td>
+    <td>Expiration Date</td>
+    <td>${orgInfo.expirationDate}</td>
+</tr>
+<tr>
+    <td>Instance URL</td>
+    <td>${orgInfo.instanceUrl}</td>
+    <td>Status</td>
+    <td>${expirationStatus}</td>
+</tr>
+<tr>
+    <td>Quick Access Link</td>
+    <td colspan="3">
+        <span class="hidden wrapit" id="accessLink">
+            <textarea class="input-field text-left" readonly rows="3" cols="80" id="accessLinkTextArea"></textarea>
+            <br />
+            <button class="button" onclick="copyToClipboard('#accessLinkTextArea');">📋 Copy to Clipboard</button>
+        </span>
+        <span id="showAccessLinkButton"><button class="button" onclick="retrieveAccessLink();">👁 Show</button></span>
+    </td>
+</tr>

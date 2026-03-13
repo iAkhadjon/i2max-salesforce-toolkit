@@ -1,0 +1,46 @@
+<!--
+ Copyright (C) 2020 Davide Rossi
+ 
+ This file is part of vscode-salesforce-toolkit.
+ 
+ vscode-salesforce-toolkit is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ vscode-salesforce-toolkit is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with vscode-salesforce-toolkit.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<hr style="margin-top: 15px" />
+<div class="container">
+    <span class="inline-block">
+        <span class="top-label">Scratch Org actions</span>
+        <button class="button" onclick="executeCommand('delete');">🗑 Delete Org</button>&nbsp;
+        <button class="button" onclick="sourceCommand('deploy');">⬆ Deploy source</button>&nbsp;
+        <button class="button" onclick="sourceCommand('retrieve');">⬇ Retrieve source</button>&nbsp;
+    </span>
+    <span class="inline-block left-margin">
+        <span class="top-label">Source options</span>
+        <span class="inline-block">
+            <div class="switch-field">
+                <input type="radio" id="radio-standard" name="sourceOptions" value="standard" checked />
+                <label for="radio-standard">Standard</label>
+                <input type="radio" id="radio-overwrite" name="sourceOptions" value="overwrite" />
+                <label for="radio-overwrite">Overwrite Conflicts</label>
+            </div>
+        </span>
+    </span>
+</div>
+
+<script>
+    function sourceCommand(command) {
+        var sourceOverwrite = document.querySelector('input[name="sourceOptions"]:checked').value;
+        vscode.postMessage({ command: command, overwrite: sourceOverwrite });
+    }
+</script>
