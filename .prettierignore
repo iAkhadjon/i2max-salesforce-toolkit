@@ -1,0 +1,8 @@
+node_modules/
+dist/
+out/
+coverage/
+*.vsix
+.vscode-test/
+.nyc_output/
+package-lock.json
